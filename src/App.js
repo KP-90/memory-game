@@ -7,10 +7,13 @@ import { useEffect, useState } from 'react';
 // Random words api info - https://www.npmjs.com/package/random-words
 
 const App = () => {
+
   let gameoverScreen = document.querySelector(".gameover")
+
   // npm random-words. Used to get x amount of random words
   let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 4}) 
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: 20}) 
+
   // Declaring everything
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
@@ -18,6 +21,7 @@ const App = () => {
   const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
 
+  // Used for gameover screen to set everything back to 0
   const reset = () => {
     gameoverScreen.style.display = 'none'
     setClickedWords([])
@@ -46,15 +50,23 @@ const App = () => {
       }
     }
 
+    // Updates bestscore in realtime
     if (score > bestScore) {
       setPrevBest(bestScore)
       setBestScore(score)
     }
 
+    // Check for win
+    if (score === words.length) {
+      gameoverScreen.style.display = 'block'
+    }
+
+    // Add event listeners
     let allP = document.querySelectorAll("p")
     allP.forEach(p => {
       p.addEventListener("click", handleClick)
     })
+    
     return() => {
       allP.forEach(p => {
         p.removeEventListener("click", handleClick)
@@ -66,7 +78,7 @@ const App = () => {
     <div className='App'>
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
-      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} prevBest={prevBest}/>
+      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} />
     </div>
   );
 }
