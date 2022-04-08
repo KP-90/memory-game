@@ -8,27 +8,28 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
   let gameoverScreen = document.querySelector(".gameover")
-
+  // npm random-words. Used to get x amount of random words
   let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 20}) 
-
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: 4}) 
+  // Declaring everything
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
-  const [prevBest, setPrevBest] = useState(0)
+  const [prevBest, setPrevBest] = useState(bestScore)
 
   const reset = () => {
     gameoverScreen.style.display = 'none'
     setClickedWords([])
     setScore(0)
+    setPrevBest(bestScore)
     setWords(wordsToUse)
   }
 
   useEffect(() => {
+    
     const handleClick = (e) => {
-      console.log("CLICK")
-      let bar = words.slice()
+      let shuffle = words.slice()
       if (clickedWords.includes(e.target.innerText)) {
         if (score > bestScore) {
           setPrevBest(bestScore)
@@ -40,10 +41,16 @@ const App = () => {
         setScore(score + 1)
         let foo = clickedWords.concat(e.target.innerText)
         setClickedWords(foo)
-        bar = bar.sort(() => Math.random() - 0.5)
-        setWords(bar)
+        shuffle = shuffle.sort(() => Math.random() - 0.5)
+        setWords(shuffle)
       }
     }
+
+    if (score > bestScore) {
+      setPrevBest(bestScore)
+      setBestScore(score)
+    }
+
     let allP = document.querySelectorAll("p")
     allP.forEach(p => {
       p.addEventListener("click", handleClick)
@@ -53,13 +60,13 @@ const App = () => {
         p.removeEventListener("click", handleClick)
       })
     }
-  }, [words, score, clickedWords])
+  }, [words, score, bestScore, clickedWords])
 
   return (
     <div className='App'>
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
-      <Gameover score={score} reset={reset} bestScore={prevBest}/>
+      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} prevBest={prevBest}/>
     </div>
   );
 }

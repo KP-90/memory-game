@@ -17,6 +17,7 @@
 .card {
     border: 1px  solid black;
     width: 100px;
+    padding: 5px;
     text-align: center;
     flex-wrap: wrap;
 }
@@ -47,4 +48,8 @@
     height: 50px;
     width: 150px;
     font-size: 24px;
+}
+
+.gameover > button:hover {
+    cursor: pointer;
 }

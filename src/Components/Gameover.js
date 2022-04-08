@@ -1,6 +1,10 @@
 import { useEffect } from "react"
 
 const Gameover = (props) =>{
+    let message = "Game Over"
+    if (props.score === props.words.length) {
+        message = "You Won!"
+    }
     useEffect(() => {
         const handleClick = () => {
             props.reset()
@@ -13,11 +17,11 @@ const Gameover = (props) =>{
     })
     return (
         <div className="gameover">
-            <h1>Game Over</h1>
-            <h3>Score: {props.score}</h3>
-            {props.score > props.bestScore && 
+            <h1>{message}</h1>
+            {props.score > props.prevBest && 
                 <h2>New High Score</h2>
             }
+            <h3>Score: {props.score}</h3>
             <button>Play Again</button>
         </div>
     )
