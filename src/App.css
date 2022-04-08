@@ -58,10 +58,12 @@
 
 .gameover > * {
     color: white;
-    margin: 50px;
+    margin: 20px;
 }
 
 .gameover > button {
+    position: relative;
+    top: 33%;
     color: black;
     height: 50px;
     width: 150px;
