@@ -12,7 +12,7 @@ const App = () => {
 
   // npm random-words. Used to get x amount of random words
   let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 20}) 
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: 4}) 
 
   // Declaring everything
   const [words, setWords] = useState(wordsToUse)
@@ -20,10 +20,12 @@ const App = () => {
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
+  const [hidden, setHidden] = useState("none")
 
   // Used for gameover screen to set everything back to 0
   const reset = () => {
-    gameoverScreen.style.display = 'none'
+    console.log("RESET CLICKED")
+    gameoverScreen.style.display = hidden
     setClickedWords([])
     setScore(0)
     setPrevBest(bestScore)
@@ -31,7 +33,6 @@ const App = () => {
   }
 
   useEffect(() => {
-    
     const handleClick = (e) => {
       let shuffle = words.slice()
       if (clickedWords.includes(e.target.innerText)) {
@@ -48,17 +49,16 @@ const App = () => {
         shuffle = shuffle.sort(() => Math.random() - 0.5)
         setWords(shuffle)
       }
+      if (score === words.length) {
+        console.log("WE HAVE A WIN")
+        gameoverScreen.style.display = 'block'
+      }
     }
 
     // Updates bestscore in realtime
     if (score > bestScore) {
       setPrevBest(bestScore)
       setBestScore(score)
-    }
-
-    // Check for win
-    if (score === words.length) {
-      gameoverScreen.style.display = 'block'
     }
 
     // Add event listeners
@@ -74,6 +74,9 @@ const App = () => {
     }
   }, [words, score, bestScore, clickedWords])
 
+  useEffect(() => {
+    console.log(score)
+  })
   return (
     <div className='App'>
       <div className='banner'>

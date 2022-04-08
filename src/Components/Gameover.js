@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 const Gameover = (props) =>{
+
     let message = "Game Over"
     if (props.score === props.words.length) {
         message = "You Won!"
