@@ -1,6 +1,6 @@
 const Score = (props) => {
     return (
-        <div>
+        <div className="score">
             <p>Score: {props.score} | Best: {props.bestScore}</p>
         </div>
     )

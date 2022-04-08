@@ -66,7 +66,7 @@ const App = () => {
     allP.forEach(p => {
       p.addEventListener("click", handleClick)
     })
-    
+
     return() => {
       allP.forEach(p => {
         p.removeEventListener("click", handleClick)
@@ -76,6 +76,9 @@ const App = () => {
 
   return (
     <div className='App'>
+      <div className='banner'>
+        <h1>Memory</h1>
+      </div>
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
       <Gameover score={score} reset={reset} bestScore={prevBest} words={words} />
