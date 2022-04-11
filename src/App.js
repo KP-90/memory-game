@@ -12,7 +12,7 @@ const App = () => {
 
   // npm random-words. Used to get x amount of random words
   let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 4}) 
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: 20}) 
 
   // Declaring everything
   const [words, setWords] = useState(wordsToUse)

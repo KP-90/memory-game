@@ -19,7 +19,7 @@ const Gameover = (props) =>{
     return (
         <div className="gameover">
             <h1>{message}</h1>
-            {props.score > props.prevBest && 
+            {props.score > props.bestScore && 
                 <h2>New High Score</h2>
             }
             <h3>Score: {props.score}</h3>
