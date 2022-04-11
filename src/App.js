@@ -20,12 +20,10 @@ const App = () => {
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
-  const [hidden, setHidden] = useState("none")
-
+  
   // Used for gameover screen to set everything back to 0
   const reset = () => {
-    console.log("RESET CLICKED")
-    gameoverScreen.style.display = hidden
+    gameoverScreen.style.display = "none"
     setClickedWords([])
     setScore(0)
     setPrevBest(bestScore)
@@ -49,10 +47,6 @@ const App = () => {
         shuffle = shuffle.sort(() => Math.random() - 0.5)
         setWords(shuffle)
       }
-      if (score === words.length) {
-        console.log("WE HAVE A WIN")
-        gameoverScreen.style.display = 'block'
-      }
     }
 
     // Updates bestscore in realtime
@@ -75,8 +69,11 @@ const App = () => {
   }, [words, score, bestScore, clickedWords])
 
   useEffect(() => {
-    console.log(score)
-  })
+    if (score === words.length) {
+      gameoverScreen.style.display = "block"
+    }
+  }, [score])
+  
   return (
     <div className='App'>
       <div className='banner'>
