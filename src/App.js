@@ -1,5 +1,6 @@
 import Card from './Components/Card';
 import Score from './Components/Score';
+import Instructions from './Components/Instructions';
 import Gameover from './Components/Gameover';
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -81,6 +82,7 @@ const App = () => {
       </div>
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
+      <Instructions />
       <Gameover score={score} reset={reset} bestScore={prevBest} words={words} />
     </div>
   );
