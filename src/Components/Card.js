@@ -4,7 +4,9 @@ const Card = (props) => {
       <div className="cardHolder">
         {props.wordArray.map((word, index) =>{
             
-          return <p className='card' key={index}>{word}</p>
+          return <div className="card"  key={index}>
+            <p className="word">{word}</p>
+            </div>
         })}
       </div>
     );
