@@ -78,11 +78,22 @@ const App = () => {
       gameoverScreen.style.display = "block"
     }
   }, [score])
+
+  // Handling the change in difficulty
+  const handleChange = (e) => {
+    console.log(e.target.value)
+  }
   
   return (
     <div className='App'>
       <div className='banner'>
-        <h1>Memory</h1>
+        <></>
+        <h1 className='title'>Memory</h1>
+        <select className='difficulty' onChange={handleChange}>
+          <option value="easy">easy</option>
+          <option value="medium">medium</option> 
+          <option value='hard'>hard</option>
+        </select>
       </div>
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />

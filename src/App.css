@@ -10,11 +10,21 @@
     align-items: center;
 }
 
-.banner {
+.banner {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     background-color: maroon;
     height: 100%;
     color: white;
     text-align: center;
+}
+
+.title {
+    grid-column: 2;
+}
+.difficulty {
+    justify-self: left;
+    align-self: center;
 }
 
 .score {
