@@ -13,7 +13,7 @@ const App = () => {
 
   // npm random-words. Used to get x amount of random words
   let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 20}) 
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: 2}) 
 
   // Declaring everything
   const [words, setWords] = useState(wordsToUse)
@@ -21,6 +21,7 @@ const App = () => {
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
+  const [amountConfetti, setConfetti] = useState(0)
   
   // Used for gameover screen to set everything back to 0
   const reset = () => {
@@ -29,6 +30,7 @@ const App = () => {
     setScore(0)
     setPrevBest(bestScore)
     setWords(wordsToUse)
+    setConfetti(0)
   }
 
   useEffect(() => {
@@ -54,6 +56,7 @@ const App = () => {
     if (score > bestScore) {
       setPrevBest(bestScore)
       setBestScore(score)
+      setConfetti(10)
     }
 
     // Add event listeners
@@ -71,6 +74,7 @@ const App = () => {
 
   useEffect(() => {
     if (score === words.length) {
+      setConfetti(200)
       gameoverScreen.style.display = "block"
     }
   }, [score])
@@ -83,7 +87,7 @@ const App = () => {
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
       <Instructions />
-      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} />
+      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti}/>
     </div>
   );
 }

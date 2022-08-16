@@ -1,11 +1,16 @@
 import { useEffect } from "react"
+import {useWindowSize} from '@react-hook/window-size'
+import Confetti from 'react-confetti'
 
 const Gameover = (props) =>{
+
+    const [width, height] = useWindowSize()
 
     let message = "Game Over"
     if (props.score === props.words.length) {
         message = "You Won!"
     }
+
     useEffect(() => {
         const handleClick = () => {
             props.reset()
@@ -16,8 +21,10 @@ const Gameover = (props) =>{
             btn.removeEventListener("click", handleClick)
         }
     })
+
     return (
         <div className="gameover">
+            <Confetti width={width} height={height} numberOfPieces={props.amountConfetti} />
             <h1>{message}</h1>
             {props.score > props.bestScore && 
                 <h2>New High Score</h2>
