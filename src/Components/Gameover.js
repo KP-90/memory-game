@@ -15,7 +15,7 @@ const Gameover = (props) =>{
     // Updates the page when the Play Again button is pressed
     useEffect(() => {
         const handleClick = () => {
-            props.reset(5)
+            props.reset(props.words.length)
         }
         let btn = document.querySelector("button")
         btn.addEventListener("click", handleClick)

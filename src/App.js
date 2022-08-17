@@ -100,6 +100,9 @@ const App = () => {
       case "hard":
         reset(15)
         break;
+      case "impossible":
+        reset(50)
+        break;
       default:
         reset(5)
     }
@@ -114,6 +117,7 @@ const App = () => {
           <option value="easy">easy</option>
           <option value="medium">medium</option> 
           <option value='hard'>hard</option>
+          <option value='impossible'>impossible</option>
         </select>
       </div>
       <Score score={score} bestScore={bestScore}/>
