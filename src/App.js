@@ -9,23 +9,30 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 
+  // npm random-words. Used to get x amount of random words
+  const [amountWords, setAmountWords] = useState(5)
+  const randomWords = require('random-words');
+  let wordsToUse = randomWords({min: 5, max: 10, exactly: amountWords})
+
   let gameoverScreen = document.querySelector(".gameover")
 
-  // npm random-words. Used to get x amount of random words
-  let randomWords = require('random-words');
-  let wordsToUse = randomWords({min: 5, max: 10, exactly: 10}) 
-
   // Declaring everything
+  
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
   const [amountConfetti, setConfetti] = useState(0)
+
+   
   
   // Used for gameover screen to set everything back to 0
-  const reset = () => {
-    gameoverScreen.style.display = "none"
+  const reset = (x) => {
+    if (gameoverScreen && gameoverScreen.style.display !== "none") {
+      gameoverScreen.style.display = "none"
+    }
+    wordsToUse = randomWords({min: 5, max: 10, exactly: x})
     setClickedWords([])
     setScore(0)
     setPrevBest(bestScore)
@@ -34,6 +41,7 @@ const App = () => {
   }
 
   useEffect(() => {
+
     const handleClick = (e) => {
       let shuffle = words.slice()
       if (clickedWords.includes(e.target.innerText)) {
@@ -70,7 +78,7 @@ const App = () => {
         p.removeEventListener("click", handleClick)
       })
     }
-  }, [words, score, bestScore, clickedWords])
+  }, [words, score, bestScore, clickedWords, amountWords])
 
   useEffect(() => {
     if (score === words.length) {
@@ -81,7 +89,21 @@ const App = () => {
 
   // Handling the change in difficulty
   const handleChange = (e) => {
-    console.log(e.target.value)
+    switch(e.target.value) {
+      case "easy":
+        reset(5)
+        break;
+      case "medium":
+        console.log("meduium")
+        reset(10)
+        break;
+      case "hard":
+        reset(15)
+        break;
+      default:
+        reset(5)
+    }
+    console.log(words)
   }
   
   return (
@@ -89,7 +111,7 @@ const App = () => {
       <div className='banner'>
         <></>
         <h1 className='title'>Memory</h1>
-        <select className='difficulty' onChange={handleChange}>
+        <select className='difficulty' id='difficulty' onChange={handleChange}>
           <option value="easy">easy</option>
           <option value="medium">medium</option> 
           <option value='hard'>hard</option>

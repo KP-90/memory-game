@@ -13,7 +13,7 @@ const Gameover = (props) =>{
 
     useEffect(() => {
         const handleClick = () => {
-            props.reset()
+            props.reset(5)
         }
         let btn = document.querySelector("button")
         btn.addEventListener("click", handleClick)
