@@ -25,6 +25,8 @@
 .difficulty {
     justify-self: left;
     align-self: center;
+    font-size: large;
+    padding: 5px;
 }
 
 .score {
