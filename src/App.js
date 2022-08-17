@@ -10,6 +10,17 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 
+  // Initialize local storage
+  let local;
+  if(!localStorage.getItem("memory")) {
+    local = {'bestScore': 0, 'easyWins': 0, 'mediumWins': 0, 'hardWins': 0}
+    localStorage.setItem('memory', JSON.stringify(local))
+  }
+  else {
+    local = JSON.parse(localStorage.getItem('memory'))
+  }
+  
+
   // npm random-words. Used to get x amount of random words
   const [amountWords, setAmountWords] = useState(5)
   const randomWords = require('random-words');
@@ -120,8 +131,8 @@ const App = () => {
       <Score score={score} bestScore={bestScore}/>
       <Card wordArray={words} />
       <Instructions />
-      <Stats />
-      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti}/>
+      <Stats bestScore={bestScore} local={local} />
+      <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti} local={local}/>
     </div>
   );
 }

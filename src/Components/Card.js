@@ -1,6 +1,9 @@
 // Displays all the words in their own card style.
 
 const Card = (props) => {
+
+
+  
     return (
       <div className="cardHolder">
         {props.wordArray.map((word, index) =>{

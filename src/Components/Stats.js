@@ -1,15 +1,17 @@
 import '../styles/stats.css'
 
-const Stats = () => {
+const Stats = (props) => {
+    console.log("PROPS: ", props)
+    let {local} = props
     return(
         <div className="stats">
             <div className="grid-view">
                 <p>Best Score:</p>
-                <p>0</p>
+                <p>{props.bestScore}</p>
             </div>
             <div className="grid-view">
                 <p>Easy wins:</p>
-                <p>0</p>
+                <p>{local.easyWins}</p>
             </div>
             <div className="grid-view">
                 <p>Medium wins:</p>

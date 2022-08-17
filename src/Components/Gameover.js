@@ -3,12 +3,15 @@ import {useWindowSize} from '@react-hook/window-size'
 import Confetti from 'react-confetti'
 
 const Gameover = (props) =>{
+    let {local} = props
 
     // For use with Confetti
     const [width, height] = useWindowSize()
 
     let message = "Game Over"
     if (props.score === props.words.length) {
+        local.easyWins += 1
+        localStorage.setItem('memory', JSON.stringify(local))
         message = "You Won!"
     }
 
