@@ -1,5 +1,6 @@
-const Instructions = () => {
+// Displays the instructions
 
+const Instructions = () => {
     return(
         <div className="instructions">
             <h2>Instructions:</h2>

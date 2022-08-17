@@ -4,6 +4,7 @@ import Confetti from 'react-confetti'
 
 const Gameover = (props) =>{
 
+    // For use with Confetti
     const [width, height] = useWindowSize()
 
     let message = "Game Over"
@@ -11,6 +12,7 @@ const Gameover = (props) =>{
         message = "You Won!"
     }
 
+    // Updates the page when the Play Again button is pressed
     useEffect(() => {
         const handleClick = () => {
             props.reset(5)

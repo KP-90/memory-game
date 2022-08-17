@@ -1,3 +1,5 @@
+// Displays the score
+
 const Score = (props) => {
     return (
         <div className="score">

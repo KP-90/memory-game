@@ -17,7 +17,6 @@ const App = () => {
   let gameoverScreen = document.querySelector(".gameover")
 
   // Declaring everything
-  
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
@@ -27,8 +26,9 @@ const App = () => {
 
    
   
-  // Used for gameover screen to set everything back to 0
+  // Used for gameover screen and chang in difficulty to set everything back to 0 and get new words
   const reset = (x) => {
+    // x is the number of new words to get.
     if (gameoverScreen && gameoverScreen.style.display !== "none") {
       gameoverScreen.style.display = "none"
     }
@@ -41,7 +41,7 @@ const App = () => {
   }
 
   useEffect(() => {
-
+    // Handles clicking on the words and what to do from there (ie. continue the game or showe the gameover screen)
     const handleClick = (e) => {
       let shuffle = words.slice()
       if (clickedWords.includes(e.target.innerText)) {
@@ -53,8 +53,8 @@ const App = () => {
       }
       else {
         setScore(score + 1)
-        let foo = clickedWords.concat(e.target.innerText)
-        setClickedWords(foo)
+        let newClickedWord = clickedWords.concat(e.target.innerText)
+        setClickedWords(newClickedWord)
         shuffle = shuffle.sort(() => Math.random() - 0.5)
         setWords(shuffle)
       }
@@ -80,6 +80,7 @@ const App = () => {
     }
   }, [words, score, bestScore, clickedWords, amountWords])
 
+  // determines if the user has won the game
   useEffect(() => {
     if (score === words.length) {
       setConfetti(200)
@@ -94,7 +95,6 @@ const App = () => {
         reset(5)
         break;
       case "medium":
-        console.log("meduium")
         reset(10)
         break;
       case "hard":
@@ -103,7 +103,6 @@ const App = () => {
       default:
         reset(5)
     }
-    console.log(words)
   }
   
   return (
