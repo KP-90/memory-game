@@ -9,6 +9,11 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 
+  if(!localStorage.getItem("test")) {
+    let newStorage = {"bestScore": 0}
+    localStorage.setItem("test", JSON.stringify(newStorage))
+  }
+
   // npm random-words. Used to get x amount of random words
   const [amountWords, setAmountWords] = useState(5)
   const randomWords = require('random-words');
@@ -20,7 +25,11 @@ const App = () => {
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
-  const [bestScore, setBestScore] = useState(0)
+  const [bestScore, setBestScore] = useState(() => {
+    let storage = JSON.parse(localStorage.getItem("test"))
+    return storage.bestScore
+  })
+  const [wins, setWins] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
   const [amountConfetti, setConfetti] = useState(0)
 
@@ -40,14 +49,18 @@ const App = () => {
     setConfetti(0)
   }
 
+  // Handles clicking on the words and what to do from there (ie. continue the game or show the gameover screen)
   useEffect(() => {
-    // Handles clicking on the words and what to do from there (ie. continue the game or showe the gameover screen)
     const handleClick = (e) => {
       let shuffle = words.slice()
       if (clickedWords.includes(e.target.innerText)) {
         if (score > bestScore) {
           setPrevBest(bestScore)
           setBestScore(score)
+          let copy = JSON.parse(localStorage.getItem("test"))
+          console.log(copy)
+          copy.bestScore = score
+          localStorage.setItem("test", JSON.stringify(copy))
         }
         gameoverScreen.style.display = "block"
       }
@@ -65,6 +78,9 @@ const App = () => {
       setPrevBest(bestScore)
       setBestScore(score)
       setConfetti(10)
+      let copy = JSON.parse(localStorage.getItem("test"))
+      copy.bestScore = score
+      localStorage.setItem("test", JSON.stringify(copy))
     }
 
     // Add event listeners
@@ -85,6 +101,8 @@ const App = () => {
     if (score === words.length) {
       setConfetti(200)
       gameoverScreen.style.display = "block"
+
+      setWins(wins + 1)
     }
   }, [score])
 
@@ -120,7 +138,7 @@ const App = () => {
           <option value='impossible'>impossible</option>
         </select>
       </div>
-      <Score score={score} bestScore={bestScore}/>
+      <Score score={score} bestScore={bestScore} wins={wins} />
       <Card wordArray={words} />
       <Instructions />
       <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti}/>
