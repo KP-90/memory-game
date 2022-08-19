@@ -9,33 +9,38 @@ import { useEffect, useState } from 'react';
 // Random words api info - https://www.npmjs.com/package/random-words
 
 const App = () => {
+  // Global variables for difficulty
+  const EASY = 2
+  const MEDIUM = 3
+  const HARD = 20
+  const IMPOSSIBLE = 50
 
   // Initialize local storage
-  let local;
-  if(!localStorage.getItem("memory")) {
-    local = {'bestScore': 0, 'easyWins': 0, 'mediumWins': 0, 'hardWins': 0}
-    localStorage.setItem('memory', JSON.stringify(local))
-  }
-  else {
-    local = JSON.parse(localStorage.getItem('memory'))
-  }
+  const [bestScore, setBestScore] = useState(0)
+  const [local, setLocal] = useState({'bestScore': 0, 'easyWins': 0, 'mediumWins': 0, 'hardWins': 0})
+  useEffect(() => {
+    if(!localStorage.getItem("memory")) {
+      localStorage.setItem('memory', JSON.stringify(local))
+    }
+    else {
+      setLocal(JSON.parse(localStorage.getItem('memory')))
+    }
+    setBestScore(local.bestScore)
+  }, [])
   
 
   // npm random-words. Used to get x amount of random words
-  const [amountWords, setAmountWords] = useState(5)
+  const [amountWords, setAmountWords] = useState(EASY)
   const randomWords = require('random-words');
   let wordsToUse = randomWords({min: 5, max: 10, exactly: amountWords})
 
-  let gameoverScreen = document.querySelector(".gameover")
-
-  // Declaring everything
+  // Declaring everything now that set up is done
+  const gameoverScreen = document.querySelector(".gameover")
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
-  const [bestScore, setBestScore] = useState(0)
   const [prevBest, setPrevBest] = useState(bestScore)
   const [amountConfetti, setConfetti] = useState(0)
-
    
   
   // Used for gameover screen and chang in difficulty to set everything back to 0 and get new words
@@ -44,6 +49,7 @@ const App = () => {
     if (gameoverScreen && gameoverScreen.style.display !== "none") {
       gameoverScreen.style.display = "none"
     }
+    if(!x) {x = EASY}
     wordsToUse = randomWords({min: 5, max: 10, exactly: x})
     setClickedWords([])
     setScore(0)
@@ -76,7 +82,35 @@ const App = () => {
     if (score > bestScore) {
       setPrevBest(bestScore)
       setBestScore(score)
+      setLocal(prevState => ({...prevState, bestScore: score}))
+      localStorage.setItem("memory", JSON.stringify(local))
       setConfetti(10)
+    }
+
+    // if winner
+    if (score === words.length) {
+      setScore(score - 1)
+      setConfetti(200)
+      let copy = local
+      // Determine difficulty and update wins
+      switch(words.length) {
+        case EASY:
+          copy.easyWins += 1
+          break;
+        case MEDIUM:
+          copy.mediumWins += 1
+          break;
+        case HARD: 
+          copy.hardWins += 1
+          break;
+        default:
+          break;
+      }
+      // Save updated wins
+      setLocal(copy)
+      localStorage.setItem("memory", JSON.stringify(copy))
+      // Show gameover screen
+      gameoverScreen.style.display = "block"
     }
 
     // Add event listeners
@@ -92,31 +126,24 @@ const App = () => {
     }
   }, [words, score, bestScore, clickedWords, amountWords])
 
-  // determines if the user has won the game
-  useEffect(() => {
-    if (score === words.length) {
-      setConfetti(200)
-      gameoverScreen.style.display = "block"
-    }
-  }, [score])
 
   // Handling the change in difficulty
   const handleChange = (e) => {
     switch(e.target.value) {
       case "easy":
-        reset(5)
+        reset(EASY)
         break;
       case "medium":
-        reset(10)
+        reset(MEDIUM)
         break;
       case "hard":
-        reset(15)
+        reset(HARD)
         break;
       default:
-        reset(5)
+        reset(EASY)
     }
   }
-  
+
   return (
     <div className='App'>
       <div className='banner'>
@@ -128,10 +155,10 @@ const App = () => {
           <option value='hard'>hard</option>
         </select>
       </div>
-      <Score score={score} bestScore={bestScore}/>
+      <Score score={score} bestScore={bestScore} />
       <Card wordArray={words} />
       <Instructions />
-      <Stats bestScore={bestScore} local={local} />
+      <Stats bestScore={prevBest} setBestScore={setBestScore} local={local} setLocal={setLocal} reset={reset}/>
       <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti} local={local}/>
     </div>
   );

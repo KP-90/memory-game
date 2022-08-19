@@ -9,9 +9,7 @@ const Gameover = (props) =>{
     const [width, height] = useWindowSize()
 
     let message = "Game Over"
-    if (props.score === props.words.length) {
-        local.easyWins += 1
-        localStorage.setItem('memory', JSON.stringify(local))
+    if (props.score + 1 === props.words.length) {
         message = "You Won!"
     }
 
@@ -20,7 +18,7 @@ const Gameover = (props) =>{
         const handleClick = () => {
             props.reset(5)
         }
-        let btn = document.querySelector("button")
+        let btn = document.querySelector("#againBtn")
         btn.addEventListener("click", handleClick)
         return() => {
             btn.removeEventListener("click", handleClick)
@@ -31,11 +29,11 @@ const Gameover = (props) =>{
         <div className="gameover">
             <Confetti width={width} height={height} numberOfPieces={props.amountConfetti} />
             <h1>{message}</h1>
-            {props.score > props.bestScore && 
+            {props.score + 1 > props.bestScore && 
                 <h2>New High Score</h2>
             }
-            <h3>Score: {props.score}</h3>
-            <button>Play Again</button>
+            <h3>Score: {props.score + 1}</h3>
+            <button id="againBtn">Play Again</button>
         </div>
     )
 }
