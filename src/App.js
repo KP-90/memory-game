@@ -2,20 +2,29 @@ import Card from './Components/Card';
 import Score from './Components/Score';
 import Instructions from './Components/Instructions';
 import Gameover from './Components/Gameover';
+import Stats from './Components/Stats';
 import './App.css';
 import { useEffect, useState } from 'react';
 
 // Random words api info - https://www.npmjs.com/package/random-words
 
 const App = () => {
+  // Declare global difficulties
+  const EASY = 2
+  const MEDIUM = 5
+  const HARD = 20
 
-  if(!localStorage.getItem("test")) {
-    let newStorage = {"bestScore": 0}
-    localStorage.setItem("test", JSON.stringify(newStorage))
+  if(!localStorage.getItem("memStats")) {
+    let newStorage = {"bestScore": 0, "wins": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    }}
+    localStorage.setItem("memStats", JSON.stringify(newStorage))
   }
 
   // npm random-words. Used to get x amount of random words
-  const [amountWords, setAmountWords] = useState(5)
+  const [amountWords, setAmountWords] = useState(EASY)
   const randomWords = require('random-words');
   let wordsToUse = randomWords({min: 5, max: 10, exactly: amountWords})
 
@@ -26,10 +35,13 @@ const App = () => {
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(() => {
-    let storage = JSON.parse(localStorage.getItem("test"))
+    let storage = JSON.parse(localStorage.getItem("memStats"))
     return storage.bestScore
   })
-  const [wins, setWins] = useState(0)
+  const [wins, setWins] = useState(() => {
+    let storage = JSON.parse(localStorage.getItem("memStats"))
+    return storage.wins
+  })
   const [prevBest, setPrevBest] = useState(bestScore)
   const [amountConfetti, setConfetti] = useState(0)
 
@@ -57,12 +69,13 @@ const App = () => {
         if (score > bestScore) {
           setPrevBest(bestScore)
           setBestScore(score)
-          let copy = JSON.parse(localStorage.getItem("test"))
+          let copy = JSON.parse(localStorage.getItem("memStats"))
           console.log(copy)
           copy.bestScore = score
-          localStorage.setItem("test", JSON.stringify(copy))
+          localStorage.setItem("memStats", JSON.stringify(copy))
         }
         gameoverScreen.style.display = "block"
+        
       }
       else {
         setScore(score + 1)
@@ -78,9 +91,9 @@ const App = () => {
       setPrevBest(bestScore)
       setBestScore(score)
       setConfetti(10)
-      let copy = JSON.parse(localStorage.getItem("test"))
+      let copy = JSON.parse(localStorage.getItem("memStats"))
       copy.bestScore = score
-      localStorage.setItem("test", JSON.stringify(copy))
+      localStorage.setItem("memStats", JSON.stringify(copy))
     }
 
     // Add event listeners
@@ -101,8 +114,24 @@ const App = () => {
     if (score === words.length) {
       setConfetti(200)
       gameoverScreen.style.display = "block"
-
-      setWins(wins + 1)
+      // Determine win type
+      let copy = JSON.parse(localStorage.getItem("memStats"))
+      switch (words.length) {
+        case EASY:
+          copy.wins.easy += 1
+          break;
+        case MEDIUM:
+          copy.wins.medium += 1
+          break;
+        case HARD:
+          copy.wins.hard += 1
+          break;
+        default:
+          break;
+      }
+      // Save new copy to local storage
+      setWins(copy.wins)
+      localStorage.setItem("memStats", JSON.stringify(copy))
     }
   }, [score])
 
@@ -110,19 +139,19 @@ const App = () => {
   const handleChange = (e) => {
     switch(e.target.value) {
       case "easy":
-        reset(5)
+        reset(EASY)
         break;
       case "medium":
-        reset(10)
+        reset(MEDIUM)
         break;
       case "hard":
-        reset(15)
+        reset(HARD)
         break;
       case "impossible":
         reset(50)
         break;
       default:
-        reset(5)
+        reset(EASY)
     }
   }
   
@@ -138,9 +167,10 @@ const App = () => {
           <option value='impossible'>impossible</option>
         </select>
       </div>
-      <Score score={score} bestScore={bestScore} wins={wins} />
+      <Score score={score} bestScore={bestScore} />
       <Card wordArray={words} />
       <Instructions />
+      <Stats bestScore={bestScore} wins={wins} />
       <Gameover score={score} reset={reset} bestScore={prevBest} words={words} amountConfetti={amountConfetti}/>
     </div>
   );

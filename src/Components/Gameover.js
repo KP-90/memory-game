@@ -17,7 +17,7 @@ const Gameover = (props) =>{
         const handleClick = () => {
             props.reset(props.words.length)
         }
-        let btn = document.querySelector("button")
+        let btn = document.querySelector("#playBtn")
         btn.addEventListener("click", handleClick)
         return() => {
             btn.removeEventListener("click", handleClick)
@@ -32,7 +32,7 @@ const Gameover = (props) =>{
                 <h2>New High Score</h2>
             }
             <h3>Score: {props.score}</h3>
-            <button>Play Again</button>
+            <button id="playBtn">Play Again</button>
         </div>
     )
 }

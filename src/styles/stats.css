@@ -1,0 +1,9 @@
+.stats {
+    margin: auto;
+}
+
+.grid-view {
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 100px 20px;
+}
