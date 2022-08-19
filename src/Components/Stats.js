@@ -4,6 +4,10 @@ const Stats = (props) => {
 
     let {wins} = props
 
+    const handleReset = () => {
+        console.log("PLEASE IMPLENT RESET PROCESS....")
+    }
+
     return(
         <div className="stats">
             <div className="grid-view">
@@ -22,7 +26,7 @@ const Stats = (props) => {
                 <p>Hard wins:</p>
                 <p>{wins.hard}</p>
             </div>
-            <button id='resetBtn'>Reset Stats</button>
+            <button id='resetBtn' onClick={handleReset}>Reset Stats</button>
         </div>
     )
 }
