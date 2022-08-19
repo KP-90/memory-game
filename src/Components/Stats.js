@@ -6,6 +6,13 @@ const Stats = (props) => {
 
     const handleReset = () => {
         console.log("PLEASE IMPLENT RESET PROCESS....")
+        let newStorage = {"bestScore": 0, "wins": {
+            "easy": 0,
+            "medium": 0,
+            "hard": 0
+          }}
+          localStorage.setItem("memStats", JSON.stringify(newStorage))
+          // trigger State change to update somehow
     }
 
     return(
