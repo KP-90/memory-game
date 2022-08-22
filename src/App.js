@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
   // Declare global difficulties
-  const EASY = 2
-  const MEDIUM = 5
+  const EASY = 5
+  const MEDIUM = 10
   const HARD = 20
 
   if(!localStorage.getItem("memStats")) {
@@ -147,9 +147,6 @@ const App = () => {
       case "hard":
         reset(HARD)
         break;
-      case "impossible":
-        reset(50)
-        break;
       default:
         reset(EASY)
     }
@@ -164,7 +161,6 @@ const App = () => {
           <option value="easy">easy</option>
           <option value="medium">medium</option> 
           <option value='hard'>hard</option>
-          <option value='impossible'>impossible</option>
         </select>
       </div>
       <Score score={score} bestScore={bestScore} />
