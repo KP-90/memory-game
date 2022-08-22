@@ -13,7 +13,7 @@
 .banner {  
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    background-color: maroon;
+    background-color: #001f2b;
     height: 100%;
     color: white;
     text-align: center;
