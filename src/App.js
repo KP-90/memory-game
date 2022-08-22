@@ -15,7 +15,7 @@ const App = () => {
   const MEDIUM = 10
   const HARD = 20
 
-  // Initialize local storage
+  // Initialize local storage if there isn't one yet
   if(!localStorage.getItem("memStats")) {
     let newStorage = {"bestScore": 0, "wins": {
       "easy": 0,
