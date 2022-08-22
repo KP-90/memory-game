@@ -38,7 +38,7 @@
     margin: 5px 0;
     display: flex;
     flex-wrap: wrap;
-    max-width: 35em;
+    max-width: 50em;
     gap: 10px;
     justify-content: center;
     justify-self: center;
@@ -46,7 +46,7 @@
 
 .card {
     border: 1px  solid black;
-    width: 100px;
+    width: 150px;
     padding: 5px;
     text-align: center;
     flex-wrap: wrap;
