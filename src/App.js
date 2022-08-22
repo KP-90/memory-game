@@ -9,11 +9,13 @@ import { useEffect, useState } from 'react';
 // Random words api info - https://www.npmjs.com/package/random-words
 
 const App = () => {
+
   // Declare global difficulties
   const EASY = 5
   const MEDIUM = 10
   const HARD = 20
 
+  // Initialize local storage
   if(!localStorage.getItem("memStats")) {
     let newStorage = {"bestScore": 0, "wins": {
       "easy": 0,
@@ -28,9 +30,10 @@ const App = () => {
   const randomWords = require('random-words');
   let wordsToUse = randomWords({min: 5, max: 10, exactly: amountWords})
 
-  let gameoverScreen = document.querySelector(".gameover")
+  
 
   // Declaring everything
+  let gameoverScreen = document.querySelector(".gameover")
   const [words, setWords] = useState(wordsToUse)
   const [clickedWords, setClickedWords] = useState([])
   const [score, setScore] = useState(0)
