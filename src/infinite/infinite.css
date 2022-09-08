@@ -1,0 +1,81 @@
+@keyframes guessMade {
+    0%{
+        background-color: white;
+    }
+    30%{
+        background-color: green;
+    }
+    100%{
+        background-color: white;
+    }
+}
+
+.Infinite-app {
+    margin: auto;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    transition: background-color 0.5s;
+}
+
+.guess {
+    transform: background-color;
+    animation: guessMade 1s;
+
+}
+
+.word {
+    background-color: white;
+    border: 2px solid black;
+    max-width: 500px;
+    height: 200px;
+    margin: auto;
+    font-size: 4rem;
+
+}
+
+.btnGroup {
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    gap: 20px;
+    margin: 50px auto;
+}
+
+button {
+    width: 10rem;
+    height: 5rem;
+    font-size: 2rem;
+}
+
+.modal {
+    display: none;
+    background-color: rgba(0, 0, 0, .75);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.modal > * {
+    color: white;
+    margin: 20px;
+}
+
+.modal-words {
+    border: 1px solid white;
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.playAgain {
+    color: black;
+}
+
+@media only screen and (max-width: 500px) {
+    .btnGroup {
+        flex-direction: column;
+    }
+}

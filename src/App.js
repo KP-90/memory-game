@@ -150,6 +150,8 @@ const App = () => {
       case "hard":
         reset(HARD)
         break;
+      case "infinite":
+        console.log("inifintie")
       default:
         reset(EASY)
     }
@@ -164,6 +166,7 @@ const App = () => {
           <option value="easy">easy</option>
           <option value="medium">medium</option> 
           <option value='hard'>hard</option>
+          <option value='infinite'>infinite</option>
         </select>
       </div>
       <Score score={score} bestScore={bestScore} />
