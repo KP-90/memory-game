@@ -94,7 +94,7 @@ const Infinite = () => {
       <div className='infinite-word'>
         <p>{newWord}</p>
       </div>
-      <p>score: {score}</p>
+      <p style={{fontSize: '2em'}}>score: {score}</p>
       <div className='btnGroup'>
         <button value='seen' >Seen</button>
         <button value='new'>New</button>
