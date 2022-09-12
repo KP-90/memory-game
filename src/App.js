@@ -3,6 +3,7 @@ import Score from './Components/Score';
 import Instructions from './Components/Instructions';
 import Gameover from './Components/Gameover';
 import Stats from './Components/Stats';
+import Banner from './Components/Banner';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -152,27 +153,14 @@ const App = () => {
       case "hard":
         reset(HARD)
         break;
-        case "infinite":
-          console.log("Navigating...")
-          nav("../infinite")
-          break
       default:
-        reset(EASY)
+        break;
     }
   }
   
   return (
     <div className='App'>
-      <div className='banner'>
-        <></>
-        <h1 className='title'>Memory</h1>
-        <select className='difficulty' id='difficulty' onChange={handleChange}>
-          <option value="easy">easy</option>
-          <option value="medium">medium</option> 
-          <option value='hard'>hard</option>
-          <option value='infinite'>infinite</option>
-        </select>
-      </div>
+      <Banner handleChange={handleChange} />
       <Score score={score} bestScore={bestScore} />
       <Card wordArray={words} />
       <Instructions />
