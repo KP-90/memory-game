@@ -33,6 +33,7 @@ const Infinite = () => {
             return true
           }
           return false
+          break;
         case "new":
           if(oldWords.includes(newWord)) {
             return false;
@@ -86,7 +87,7 @@ const Infinite = () => {
   return (
     <div className="Infinite-app">
       <Gameover score={score} oldWords={oldWords} />
-      <div className='word'>
+      <div className='infinite-word'>
         <p>{newWord}</p>
       </div>
       <p>score: {score}</p>

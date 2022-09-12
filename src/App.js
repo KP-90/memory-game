@@ -5,6 +5,7 @@ import Gameover from './Components/Gameover';
 import Stats from './Components/Stats';
 import './App.css';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Random words api info - https://www.npmjs.com/package/random-words
 
@@ -47,6 +48,7 @@ const App = () => {
   })
   const [prevBest, setPrevBest] = useState(bestScore)
   const [amountConfetti, setConfetti] = useState(0)
+  const nav = useNavigate()
 
    
   
@@ -150,8 +152,10 @@ const App = () => {
       case "hard":
         reset(HARD)
         break;
-      case "infinite":
-        console.log("inifintie")
+        case "infinite":
+          console.log("Navigating...")
+          nav("../infinite")
+          break
       default:
         reset(EASY)
     }
