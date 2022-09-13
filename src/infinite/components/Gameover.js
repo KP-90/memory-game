@@ -31,7 +31,7 @@ const Gameover = (props) => {
                 <LeftSide />
                 <RightSide />
             </div>
-            <button className="playAgain" onClick={() => {window.location.reload()}}>Play Again</button>
+            <button className="playAgain" onClick={props.reset}>Play Again</button>
         </div>
     )
 }

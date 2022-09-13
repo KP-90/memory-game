@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import Gameover from './components/Gameover';
-import Banner from '../Components/Banner';
 import './infinite.css';
-
-import { useNavigate } from 'react-router-dom';
 
 let randomWords = require('random-words');
 
@@ -12,7 +9,6 @@ const Infinite = () => {
   const [oldWords, setOldWords] = useState([])
   const [score, setScore] = useState(0)
   const [newWord, setNewWord] = useState(randomWords(1)[0])
-  const nav = useNavigate()
 
   // Handles deciding whether a new word or an old word is chosen to display
   const determineTest = () => {
@@ -50,7 +46,6 @@ const Infinite = () => {
     }
 
     const handleGuess = (e) => {
-      console.log(oldWords, newWord, e.target)
       if(checkGuess(e.target.value)){
         //if true, continue game
         setScore(score + 1)
@@ -87,10 +82,18 @@ const Infinite = () => {
       })
     }
   }, [newWord])
+
+  const reset = () => {
+    const gameover = document.querySelector(".modal")
+    gameover.style.display = "none"
+    setScore(0)
+    setOldWords([])
+    setNewWord(randomWords(1)[0])
+  }
   
   return (
     <div className="Infinite-app">
-      <Gameover score={score} oldWords={oldWords} />
+      <Gameover score={score} oldWords={oldWords} reset={reset} />
       <div className='infinite-word'>
         <p>{newWord}</p>
       </div>
