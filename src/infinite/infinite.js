@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Gameover from './components/Gameover';
 import Banner from '../Components/Banner';
 import './infinite.css';
+
 import { useNavigate } from 'react-router-dom';
 
 let randomWords = require('random-words');
@@ -89,7 +90,6 @@ const Infinite = () => {
   
   return (
     <div className="Infinite-app">
-      <Banner />
       <Gameover score={score} oldWords={oldWords} />
       <div className='infinite-word'>
         <p>{newWord}</p>
