@@ -17,7 +17,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/memory-game" element={<App />} />
-      <Route path="infinite" element={<Infinite />} />
+      <Route path="memory-game/infinite" element={<Infinite />} />
     </Routes>
   </BrowserRouter>
 );

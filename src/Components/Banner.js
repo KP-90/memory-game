@@ -5,12 +5,11 @@ const Banner = (props) => {
     const nav = useNavigate()
 
     const handleRoute = (e) => {
-        if(e.target.value === "infinite" && window.location.pathname != "/infinite") {
-            nav("/infinite")
+        if(e.target.value === "infinite" && window.location.pathname != "memory-game/infinite") {
+            nav("./infinite")
             return
         }
         else if (window.location.pathname != "/memory-game") {
-            
             nav("/memory-game")
         }
         else {
@@ -20,7 +19,8 @@ const Banner = (props) => {
 
     // Set the difficulty selector to have 'infinite' selected
     useEffect(() => {
-        if(window.location.pathname === "/infinite") {
+        console.log(window.location.pathname)
+        if(window.location.pathname === "/memory-game/infinite") {
             document.querySelector("#difficulty").value = "infinite"
         }
     }, [window.location.pathname])
