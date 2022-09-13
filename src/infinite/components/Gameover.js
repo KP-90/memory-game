@@ -14,7 +14,7 @@ const Gameover = (props) => {
 
     const RightSide = () => {
         return(
-            <ol start={1+length/2}>
+            <ol start={(length/2) + 2}>
                 {props.oldWords.map((word, i) => {
                     if(i < length / 2) {return null}
                     return <li key={i}>{word}</li>
